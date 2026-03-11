@@ -1,11 +1,11 @@
 import * as z from 'zod';
 import * as yaml from 'yaml';
 
-import type { Definition, InputSchema, OutputSchema } from '../types/definition.js';
+import type { Definition, InputSchema, OutputSchema } from '../../types/definition.js';
 
-import { helloWorldExample } from '../examples/hello-world.js';
+import { api } from './api.js';
 
-const definitions = helloWorldExample as Record<string, Definition<InputSchema, OutputSchema>>;
+const definitions = api as Record<string, Definition<InputSchema, OutputSchema>>;
 
 console.log('All APIs:');
 for (const definition of Object.values(definitions)) {
@@ -49,27 +49,3 @@ Object.values(definitions).forEach((definition: Definition<InputSchema, OutputSc
 });
 console.log(openAPI);
 console.log(yaml.stringify(openAPI));
-
-// TODO client usage
-// wrap apis with discovery.getBaseUrl()
-
-// useQuery({ query: apis.getUsers({
-//   query: { offset: 0, limit: 10 },
-// }) })
-
-// useQuery({ query: apis.getUserById({
-//   path: { id: '4711' },
-// }) })
-
-// TODO server usage
-// wrap apis and implement the backend
-// all input variables (path, query and body) should automatically use saveParse
-
-// router.implement(apis, {
-//   getUsers: async ({ query: { offset, limit } }) => {
-//     console.log(`get all users at offset ${offset} with limit ${limit}`);
-//   },
-//   getUserById: async ({ path: { id } }) => {
-//     console.log(`get user by id ${id}`);
-//   },
-// });

@@ -1,7 +1,7 @@
 import * as z from 'zod';
 
-import type { PathParams } from '../types/path.js';
-import type { Definition, InputSchema, OutputSchema } from '../types/definition.js';
+import type { PathParams } from '../../types/path.js';
+import type { Definition, InputSchema, OutputSchema } from '../../types/definition.js';
 
 const User = z.object({
   name: z.string(),
@@ -37,7 +37,7 @@ const getUserById = {
 type GetUserByIdPathParams = PathParams<typeof getUserById.path>
 // TODO test type
 
-export const helloWorldExample = {
+export const api = {
   getUsers,
   getUserById,
 } as any;
