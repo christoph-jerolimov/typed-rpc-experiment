@@ -16,13 +16,7 @@ const UserFilter = z.object({
 const getUsers = {
   method: 'GET',
   path: '/users',
-  attributes: {
-    destructive: false,
-    readOnly: true,
-    idempotent: true,
-  },
-  title: '',
-  description: '',
+  title: 'Get all users',
   schema: {
     query: z => UserFilter,
     input: z => z.string(),
@@ -33,13 +27,7 @@ const getUsers = {
 const getUserById = {
   method: 'GET',
   path: '/users/:id',
-  attributes: {
-    destructive: false,
-    readOnly: true,
-    idempotent: true,
-  },
-  title: '',
-  description: '',
+  title: 'Get one user by id',
   schema: {
     input: z => z.string(),
     output: z => User,
