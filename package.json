@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "tsx scripts/example.ts"
+    "start": "tsx scripts/show-openapi.ts"
   },
   "devDependencies": {
     "tsx": "^4.21.0",
