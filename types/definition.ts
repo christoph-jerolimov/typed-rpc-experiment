@@ -19,9 +19,10 @@ export interface Definition<
   title?: string;
   description?: string;
   schema: {
-    query?: (zod: typeof z) => InputSchema;
-    input: (zod: typeof z) => InputSchema;
-    output: (zod: typeof z) => OutputSchema;
-    error?: (zod: typeof z) => OutputSchema;
+    query?: ((zod: typeof z) => InputSchema) | InputSchema;
+    // TODO: must not be defined for GET calls?!
+    input?: ((zod: typeof z) => InputSchema) | InputSchema;
+    output?: ((zod: typeof z) => OutputSchema) | OutputSchema;
+    error?: ((zod: typeof z) => OutputSchema) | OutputSchema;
   };
 }
