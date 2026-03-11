@@ -1,50 +1,14 @@
 import * as z from 'zod';
 import * as yaml from 'yaml';
 
-import type { PathParams } from '../types/path.js';
 import type { Definition, InputSchema, OutputSchema } from '../types/definition.js';
 
-const User = z.object({
-  name: z.string(),
-});
+import { helloWorldExample } from '../examples/hello-world.js';
 
-const UserFilter = z.object({ 
-  name: z.string(),
-  offset: z.number(),
-  limit: z.number(),
-  // etc.
-});
-
-const getUsers = {
-  method: 'GET',
-  path: '/users',
-  title: 'Get all users',
-  schema: {
-    query: UserFilter,
-    output: z => z.array(User),
-  },
-} as const satisfies Definition<InputSchema, OutputSchema>;
-
-const getUserById = {
-  method: 'GET',
-  path: '/users/:id',
-  title: 'Get one user by id',
-  schema: {
-    output: User,
-  },
-} as const satisfies Definition<InputSchema, OutputSchema>;
-
-// { id: string }
-type GetUserByIdPathParams = PathParams<typeof getUserById.path>
-// TODO test type
-
-const apis = {
-  getUsers,
-  getUserById,
-};
+const definitions = helloWorldExample as Record<string, Definition<InputSchema, OutputSchema>>;
 
 console.log('All APIs:');
-for (const definition of Object.values(apis)) {
+for (const definition of Object.values(definitions)) {
   console.log('-', definition.method, definition.path);
 }
 
@@ -59,7 +23,7 @@ const openAPI = {
   paths: {} as Record<string, Record<string, Record<string, any>>>,
 };
 
-Object.values(apis).forEach((definition: Definition<InputSchema, OutputSchema>) => {
+Object.values(definitions).forEach((definition: Definition<InputSchema, OutputSchema>) => {
   if (!openAPI.paths[definition.path]) {
     openAPI.paths[definition.path] = {};
   }
