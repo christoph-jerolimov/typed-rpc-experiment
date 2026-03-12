@@ -20,7 +20,7 @@ const getUsers = {
   title: 'Get all users',
   schema: {
     query: UserFilter,
-    output: z => z.array(User),
+    output: z.array(User),
   },
 } as const satisfies Definition<InputSchema, OutputSchema>;
 

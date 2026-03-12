@@ -18,6 +18,7 @@ export interface Definition<
   // For OpenAPI export
   title?: string;
   description?: string;
+  tags?: string[];
   schema: {
     query?: ((zod: typeof z) => InputSchema) | InputSchema;
     // TODO: must not be defined for GET calls?!
@@ -25,4 +26,7 @@ export interface Definition<
     output?: ((zod: typeof z) => OutputSchema) | OutputSchema;
     error?: ((zod: typeof z) => OutputSchema) | OutputSchema;
   };
+
+  // TODO: Optional validations ???
+  // expectedStatusCode?: number | number[],
 }

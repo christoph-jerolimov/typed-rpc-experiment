@@ -24,18 +24,46 @@ const openAPI = {
 };
 
 Object.values(definitions).forEach((definition: Definition<InputSchema, OutputSchema>) => {
-  if (!openAPI.paths[definition.path]) {
-    openAPI.paths[definition.path] = {};
+  const method = definition.method.toLocaleLowerCase('en');
+  // Convert /users/:id to /users/${id}
+  const path = definition.path.replaceAll(/:([A-Za-z0-9-]+)/g, '{$1}');
+
+  if (!openAPI.paths[path]) {
+    openAPI.paths[path] = {};
   }
-  if (!openAPI.paths[definition.path]![definition.method]) {
-    openAPI.paths[definition.path]![definition.method] = {};
+  if (!openAPI.paths[path]![method]) {
+    openAPI.paths[path]![method] = {};
+  }
+
+  const parameters: any[] = [];
+
+  // TODO: add definition.path to parameters
+  if (definition.path === '/users/:id') {
+    parameters.push({
+      name: 'id',
+      in: 'path',
+      // ...
+      // schema: 
+    });
+  }
+
+  if (definition.schema.query) {
+    // Iterate over all query parameters
+    parameters.push({
+      name: 'id',
+      in: 'query',
+      // ...
+      // schema: 
+    });
   }
 
   const output = typeof definition.schema.output === 'function' ? definition.schema.output(z) : definition.schema.output;
 
-  openAPI.paths[definition.path]![definition.method]! = {
+  openAPI.paths[path]![method]! = {
     summary: definition.title,
     description: definition.description,
+    tags: definition.tags,
+    parameters: parameters,
     responses: {
       200: {
         content: {
